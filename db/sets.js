@@ -1,9 +1,10 @@
-const client = require("./client");
+const {PrismaClient} = require('@prisma/client');
+
+const prisma = new PrismaClient();
 
 async function getAllSets() {
     try {
-        const {rows} = await client.query(`SELECT * FROM sets;`);
-        return rows;
+        return await prisma.sets.findMany();
     } catch (err) {
         throw err;
     }
@@ -11,11 +12,11 @@ async function getAllSets() {
 
 async function getSetById(id) {
     try {
-        const {rows: [set]} = await client.query(`
-            SELECT * FROM sets WHERE id =$1;
-        `, [id])
-
-        return set;
+        return await prisma.sets.findFirst({
+            where:{
+                id:Number(id)
+            }
+        })
     } catch (error) {
         throw error
     }

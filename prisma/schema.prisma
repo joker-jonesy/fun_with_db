@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model sets {
+  id     Int    @id @default(autoincrement())
+  name   String @unique
+  price  Int    @default(5)
+  tag    tags?  @relation(fields: [tagsId], references: [id])
+  tagsId Int?
+}
+
+model tags {
+  id   Int     @id @default(autoincrement())
+  name String? @unique
+  sets sets[]
+}
