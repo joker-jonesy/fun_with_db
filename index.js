@@ -15,3 +15,5 @@ app.use('/api', require('./api'))
 app.listen(PORT, ()=>{
     console.log("Server is on")
 });
+
+module.exports= app;
